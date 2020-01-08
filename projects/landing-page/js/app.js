@@ -29,7 +29,7 @@ function CalcPercent(rect){
     let bot = (rect.bottom - window.innerHeight);
     let size = window.innerHeight + bot - top;
     let percent = 0;
-    if(bot < 0 && top > 0){
+    if(bot <= 0 && top >= 0){
         percent = 1;
     }
     if(bot > 0 && top > 0)
@@ -76,19 +76,25 @@ document.addEventListener("DOMContentLoaded", function(){
         }
         timer = this.setTimeout(function() {
             let percents = [];
+            let areas = [];
             for(nav of navs){
                 const target = document.querySelectorAll('[data-nav="' + nav + '"]');
                 const area = target[1].getBoundingClientRect();
                 const percent = CalcPercent(area);
                 percents.push(percent);
+                areas.push(area);
             }
             const max = Math.max(...percents);
             index = percents.indexOf(max);
             const active = document.querySelector(".your-active-class");
-            active.classList.remove("your-active-class");
-            // console.log(navs[index]);
-            // console.log(percents)
-            document.querySelector('[data-nav="' + navs[index] + '"]').classList.add("your-active-class");
+            if(active !== null){
+                active.classList.remove("your-active-class");
+            }
+            console.log(areas);
+            console.log(window.innerHeight);
+            console.log(percents);
+            // console.log(document.querySelectorAll('[data-nav="' + navs[index] + '"]')[1]);
+            document.querySelectorAll('[data-nav="' + navs[index] + '"]')[1].classList.add("your-active-class");
         }, 100);
     };
 
@@ -108,6 +114,13 @@ document.addEventListener("DOMContentLoaded", function(){
         const target = document.querySelectorAll('[data-nav="' + nav + '"]');
         target[0].onclick = function(){
             target[1].scrollIntoView();
+
+            const active = document.querySelector(".your-active-class");
+
+            if(active !== null){
+                active.classList.remove("your-active-class");
+            }
+            target[1].classList.add("your-active-class");
         };
     }
     // Set sections as active
