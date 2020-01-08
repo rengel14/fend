@@ -1,29 +1,4 @@
-/**
- * 
- * Manipulating the DOM exercise.
- * Exercise programmatically builds navigation,
- * scrolls to anchors from navigation,
- * and highlights section in viewport upon scrolling.
- * 
- * Dependencies: None
- * 
- * JS Version: ES2015/ES6
- * 
- * JS Standard: ESlint
- * 
-*/
-
-/**
- * Define Global Variables
- * 
-*/
-
-
-/**
- * End Global Variables
- * Start Helper Functions
- * 
-*/
+// Start Helper Functions
 function CalcPercent(rect){
     let top = rect.top;
     let bot = (rect.bottom - window.innerHeight);
@@ -41,23 +16,23 @@ function CalcPercent(rect){
     }
     return percent;
 }
+// End Helper Functions
 
-
-/**
- * End Helper Functions
- * Begin Main Functions
- * 
-*/
-
-// build the nav
+// Begin Main Functions
 document.addEventListener("DOMContentLoaded", function(){
+    // builds the nav menu
+
+    //finds all elements with a data-nav attribute and records the value of that attribute
     const main = document.querySelector('main');
     children = main.children;
     let navs = [];
     for(child of children){
         navs.push(child.getAttribute('data-nav'));
     }
-    navs = navs.slice(1); //removes first element which is always header
+
+    navs = navs.slice(1); //removes first element (which is always header) from attribute list
+
+    //turns attribute list into html list items for the nav menu
     let tempString = "";
     for(nav of navs){
         tempString = tempString + '\n<li data-nav="' + nav + '">' + nav + '</li>';
@@ -65,9 +40,13 @@ document.addEventListener("DOMContentLoaded", function(){
     tempString = tempString.concat("\n");
     const list = document.querySelector('#navbar__list');
     list.innerHTML = tempString;
-    list.style.color = "black"
 
-    // Add class 'active' to section when near top of viewport
+    //sets first section header as active on document loaded
+    document.querySelectorAll('[data-nav="' + navs[0] + '"]')[1].classList.add("active");
+
+    // Add class 'active' to section when taking up most screen space
+
+    //set up scroll lock timer to avoid event spamming multiple times during scrolling
     let timer = null;
     window.onscroll = function(){
         let index = -1;
@@ -75,54 +54,50 @@ document.addEventListener("DOMContentLoaded", function(){
             this.clearTimeout(timer);
         }
         timer = this.setTimeout(function() {
+            //calculates which element is taking up the most screen space
             let percents = [];
-            let areas = [];
             for(nav of navs){
                 const target = document.querySelectorAll('[data-nav="' + nav + '"]');
                 const area = target[1].getBoundingClientRect();
                 const percent = CalcPercent(area);
                 percents.push(percent);
-                areas.push(area);
             }
             const max = Math.max(...percents);
+
+            //gets the index of that element and sets it to active after un-setting other elements
             index = percents.indexOf(max);
-            const active = document.querySelector(".your-active-class");
+            const active = document.querySelector(".active");
             if(active !== null){
-                active.classList.remove("your-active-class");
+                active.classList.remove("active");
             }
-            console.log(areas);
-            console.log(window.innerHeight);
-            console.log(percents);
-            // console.log(document.querySelectorAll('[data-nav="' + navs[index] + '"]')[1]);
-            document.querySelectorAll('[data-nav="' + navs[index] + '"]')[1].classList.add("your-active-class");
-        }, 100);
+            document.querySelectorAll('[data-nav="' + navs[index] + '"]')[1].classList.add("active");
+        }, 100); //Currently uses 100ms delay
     };
 
-    // Scroll to anchor ID using scrollTO event
-    
-
-    /**
-     * End Main Functions
-     * Begin Events
-     * 
-    */
-
     // Build menu 
+    const dropdown = document.getElementById("dropdown");
+    const navbar = document.getElementById("navbar__list")
+    dropdown.onmouseenter = function() {
+        navbar.style.display = "block";
+    }
+    document.getElementsByClassName("navbar__menu")[0].onmouseleave = function() {
+        navbar.style.display = "none";
+    }
 
-    // Scroll to section on link click
+    // Scroll to section on menu section click
     for(nav of navs){
         const target = document.querySelectorAll('[data-nav="' + nav + '"]');
         target[0].onclick = function(){
             target[1].scrollIntoView();
 
-            const active = document.querySelector(".your-active-class");
-
+            // Set sections as active
+            const active = document.querySelector(".active");
             if(active !== null){
-                active.classList.remove("your-active-class");
+                active.classList.remove("active");
             }
-            target[1].classList.add("your-active-class");
+            target[1].classList.add("active");
+
+            navbar.style.display = "none";
         };
     }
-    // Set sections as active
-
 });
