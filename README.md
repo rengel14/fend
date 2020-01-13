@@ -1,3 +1,3 @@
-# Front End Nanodegree Program
+# Landing Page Project
 
-I forked this repository to use as a starter for this assignment. The relevent code is located in the projects/landing-page directory.
+The HTML File for this assignment is located in the index.html file and is the starting point for the application. The javascript portion can be found in the js/app.js file, and the CSS can be found in the css/styles.css file.
