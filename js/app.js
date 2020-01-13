@@ -42,7 +42,9 @@ document.addEventListener("DOMContentLoaded", function(){
     list.innerHTML = tempString;
 
     //sets first section header as active on document loaded
-    document.querySelectorAll('[data-nav="' + navs[0] + '"]')[1].classList.add("active");
+    let activeSection = document.querySelectorAll('[data-nav="' + navs[0] + '"]');
+    activeSection[0].classList.add("active");
+    activeSection[1].classList.add("active");
 
     // Add class 'active' to section when taking up most screen space
 
@@ -66,11 +68,13 @@ document.addEventListener("DOMContentLoaded", function(){
 
             //gets the index of that element and sets it to active after un-setting other elements
             index = percents.indexOf(max);
-            const active = document.querySelector(".active");
-            if(active !== null){
-                active.classList.remove("active");
+            const lastActive = document.querySelector(".active");
+            if(lastActive !== null){
+                lastActive.classList.remove("active");
             }
-            document.querySelectorAll('[data-nav="' + navs[index] + '"]')[1].classList.add("active");
+            activeSection = document.querySelectorAll('[data-nav="' + navs[index] + '"]');
+            activeSection[0].classList.add("active");
+            activeSection[1].classList.add("active");
         }, 100); //Currently uses 100ms delay
     };
 

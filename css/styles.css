@@ -101,6 +101,10 @@ section {
     z-index: 2;
 }
 
+li.active {
+    color: Coral;
+}
+
 /* Footer Styles */
 .page__footer {
     background: #000;
@@ -191,6 +195,9 @@ section.active .landing__container::after {
     animation: rotate 5s linear 0s infinite forwards reverse;
 }
 
+section.active .landing__container h2 {
+    color: Coral;
+}
 /* Section Active Styles Keyframe Animations */
 @keyframes rotate {
 	from {
