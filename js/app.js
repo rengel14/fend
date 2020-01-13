@@ -68,9 +68,11 @@ document.addEventListener("DOMContentLoaded", function(){
 
             //gets the index of that element and sets it to active after un-setting other elements
             index = percents.indexOf(max);
-            const lastActive = document.querySelector(".active");
+            const lastActive = document.querySelectorAll(".active");
             if(lastActive !== null){
-                lastActive.classList.remove("active");
+                for(item of lastActive) {
+                    item.classList.remove("active");
+                }
             }
             activeSection = document.querySelectorAll('[data-nav="' + navs[index] + '"]');
             activeSection[0].classList.add("active");
