@@ -1,5 +1,5 @@
 /* Empty JS object to act as endpoint for all routes */
-projectData = {};
+projectData = [];
 
 /* Express to run server and routes */
 const express = require('express');
@@ -22,29 +22,19 @@ const port = 3000;
 /* Spin up the server*/
 const server = app.listen(port, listening);
  function listening(){
-    // console.log(server);
     console.log(`running on localhost: ${port}`);
   };
 
-// GET route
-app.get('/all', sendData);
+// GET route. Sends data array to client
+app.get('/get', function (req, res) {
+  res.send(JSON.stringify(projectData));
+})
 
-function sendData (request, response) {
-  response.send(projectData);
-};
-
-// POST route
-app.post('/add', callBack);
-
-function callBack(req,res){
-  res.send('POST received');
-}
-
-// POST an animal
-const data = [];
-
-app.post('/animal', addAnimal);
-
-function addAnimal (req,res){
-    data.push(req.body);
-};
+// This responds a POST request for the homepage
+app.post('/', function (req, res) {
+  //gets data and add it to beginning of array object
+  const data = req.body;
+  projectData.unshift(data);
+  //sends a response back to the client side to show success
+  res.send({'message': 'recieved'});
+})
