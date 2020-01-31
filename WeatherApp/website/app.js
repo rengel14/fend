@@ -1,4 +1,8 @@
 /* Global Variables */
+//stores the API key I was given upon account creation on the openweather website
+const apikey = 'c599d3eeab09a9a592da504c68a00bee';
+//base URL for the api
+const baseUrl = 'http://api.openweathermap.org/data/2.5/forecast?';
 
 // Create a new date instance dynamically with JS
 let d = new Date();
@@ -30,7 +34,7 @@ const retrieveData = async (url='') =>{
 
         //Update output html fields
         document.getElementById('date').innerText = data[0].date;
-        document.getElementById('temp').innerText = data[0].weather;
+        document.getElementById('temp').innerText = data[0].temp;
         document.getElementById('content').innerText = data[0].feelings;
 
         //reset input html fields
@@ -44,10 +48,6 @@ const retrieveData = async (url='') =>{
 };
 
 const GetWeather = async () =>{ 
-    //stores the API key I was given upon account creation on the openweather website
-    const apikey = 'c599d3eeab09a9a592da504c68a00bee';
-    const baseUrl = 'http://api.openweathermap.org/data/2.5/forecast?';
-
     //gets zip code from html input field
     const zip = document.getElementById('zip').value;
     //constructs url to query
@@ -60,7 +60,8 @@ const GetWeather = async () =>{
         
         //Construct Journal Entry object
         object = {
-            'weather': data.list[0].weather[0].description,
+            //converts Kelvin temperature to Fahrenheit 
+            'temp': Math.round((((data.list[0].main.temp) - 273.15) * (9/5)) + 32),
             'date': newDate,
             'feelings': document.getElementById('feelings').value
         }
