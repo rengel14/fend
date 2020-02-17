@@ -4,11 +4,14 @@ const postData = async ( url = '', data = {})=>{
         credentials: 'same-origin', 
         headers: {
             'Content-Type': 'application/json',
+
         },
         body: JSON.stringify(data), // body data type must match "Content-Type" header        
     });
     try {
-        await response.json();
+        const res = await response.json();
+        console.log(res)
+        return(res)
     }catch(error) {
         console.log("error", error);
     }
@@ -23,13 +26,15 @@ function handleSubmit(event) {
 
     console.log("::: Form Submitted :::")
 
-    postData('/eval', { url: formText })
-    .then(res => res.json())
+    postData('http://localhost:8081/eval', { url: formText })
     .then(function(res) {
-        document.getElementById('results').innerHTML = res.message
+        document.getElementById('results').innerHTML = 
+        '\n\t<p>Polarity: ' + res.polarity + ' (with ' + Math.round(res.polarity_confidence*100)/100 + ' confidence)</p>' + 
+        '\n\t<p>Subjectivity: ' + res.subjectivity + ' (with ' + Math.round(res.subjectivity_confidence*100)/100 + ' confidence)</p>\n'
     })
 
-    // fetch('http://localhost:8080/eval')
+    // let data = {url: formText}
+    // fetch('http://localhost:8080/eval', {body: JSON.stringify(data)})
     // .then(res => res.json())
     // .then(function(res) {
     //     document.getElementById('results').innerHTML = res.message
