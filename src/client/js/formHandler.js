@@ -19,6 +19,8 @@ const postData = async ( url = '', data = {})=>{
 function handleSubmit(event) {
     event.preventDefault()
 
+    document.getElementById('results').innerHTML = "Running... "
+
     // check what text was put into the form field
     let formText = document.getElementById('name').value
     const error = Client.checkForName(formText)
@@ -39,7 +41,5 @@ function handleSubmit(event) {
         document.getElementById('results').innerHTML = "Error: " + error
     }
 }
-
-
 
 export { handleSubmit }
