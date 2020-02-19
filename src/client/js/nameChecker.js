@@ -13,3 +13,9 @@ function checkForName(inputText) {
 }
 
 export { checkForName }
+
+try{
+    module.exports = checkForName
+}catch (error) {
+    console.log('Jest error');
+  }

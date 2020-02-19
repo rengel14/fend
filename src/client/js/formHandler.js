@@ -10,6 +10,7 @@ const postData = async ( url = '', data = {})=>{
     });
     try {
         const res = await response.json();
+        console.log(res)
         return(res)
     }catch(error) {
         console.log("error", error);
@@ -43,3 +44,9 @@ function handleSubmit(event) {
 }
 
 export { handleSubmit }
+
+try{
+    module.exports = postData
+}catch (error) {
+    console.log('Jest error');
+  }
