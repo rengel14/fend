@@ -1,33 +1,36 @@
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="UTF-8">
-<title>Weather Journal</title>
-<link href="https://fonts.googleapis.com/css?family=Oswald:400,600,700|Ranga:400,700&display=swap" rel="stylesheet">
-</head>
- <body>
-<div id = "app">
-  <div class ="holder headline">
-    Weather Journal App
-  </div>
-  <div class ="holder zip">
-    <label for="zip">Enter Zipcode here</label>
-    <input type="text" id="zip" placeholder="enter zip code here">
-  </div>
-  <div class ="holder feel">
-    <label for="feelings">How are you feeling today?</label>
-    <textarea class= "myInput" id="feelings" placeholder="Enter your feelings here" rows="9" cols="50"></textarea>
-    <button id="generate" type = "submit"> Generate </button>
-  </div>
-  <div class ="holder entry">
-    <div class = "title">Most Recent Entry</div>
-   <div id = "entryHolder">
-    <div id = "date"></div> 
-   <div id = "temp"></div>
-   <div id = "content"></div>
-  </div>
-  </div>
-  </div>
-
-</body>
+    <head>
+        <meta charset="UTF-8">
+        <title>Travel Planner</title>
+    </head>
+    <body>
+        <div class="container">
+            <header>
+                <div class ="headline">Travel Planner</div>
+            </header>
+            <img id="locPic" src="/images/placeholder.jpg">
+            <div class ="tripFlex">
+                <div>
+                    <label for="loc">My trip to: </label>
+                    <input type="text" id="loc" placeholder="Enter Location Here">
+                </div>
+                <div>
+                    <label for="date">Departing: </label>
+                    <input type="date" id="date" placeholder="Enter Date Here">
+                </div>
+            </div>
+            <div class="buttons">
+                <button id='save'>Save Trip</button>
+                <button id='remove'>Remove Trip</button>
+            </div>
+            <div class="projections">
+                <div id="locProj"></div>
+                <div id="weatherProj"></div>
+            </div>
+            <footer>
+                <a href="https://darksky.net/poweredby/" class="credits">Powered by Dark Sky</a>
+            </footer>
+        </div>
+    </body>
 </html>

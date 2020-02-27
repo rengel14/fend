@@ -1,7 +1,4 @@
-# Weather-Journal App Project
-
-## Overview
-This project creates an asynchronous web app that uses Web API and user data to dynamically update the UI. 
+# Travel Planner App Project
 
 ## Instructions
-To run the app, enter the command "node server.js" from the WeatherApp directory inside a termal. Then use a browser to navigate to localhost:3000. 
+To run the app in development mode, enter the commands "npm run start" and "npm run build-dev" from the fend directory inside a termal. To compile the app to deploy to production, run the command "npm run build" instead. This will place the compiled app in the dist/ folder.  

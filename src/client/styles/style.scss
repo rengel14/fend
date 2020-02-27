@@ -1,111 +1,77 @@
+$font: Helvetica, sans-serif;
+$color: #ffdada;
+
 body{
-    background: #fffff8;
-    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    font: 100% $font;
+    margin: 0px
 }
-
-#app{
+.container{
+    background-color: $color;
     display: grid;
-    grid-auto-rows: minmax(150px, auto);
-    /* grid-template-columns:  */
-    height:100vh;
-    background: #f23557;
-    color: #f0d43a;
-    justify-content: center;
-    grid-gap: 1em;
-    font-size: 20px;
-    font-family: 'Oswald', sans-serif;
+    grid-template-columns: 100vw;
+    grid-template-rows: auto;
+    grid-template-areas: 
+        "header"
+        "image"
+        "trip"
+        "buttons"
+        "projections"
+        "footer";
+}
+header{
+    font: 150% $font;
+    grid-area: header;
+    padding: 25px 0px 10px 10px;
+    background-color: white;
+}
+footer{
+    padding-top: 10px;
+    grid-area: footer;
+    background-color: white;
+}
+img{
+    width: 100vw;
+    grid-area: image;
+}
+.tripFlex{
+    display: flex;
+    flex-direction: column;
+    font-weight: bold;
+    margin-top: 20px;
+    margin-left: 5vw;
+    grid-area: trip;
+}
+.buttons{
+    display: flex;
+    flex-direction: row;
+    margin: 10px;
+    grid-area: buttons;
+    margin-left: 5vw;
+    button{
+        margin: 0px 10px 0px 0px;
+    }
+}
+.projections{
+    margin-left: 5vw;
+    grid-area: "projections"
 }
 
-.holder{
-
+@media only screen and (min-width: 600px) {
+    .container{
+        display: grid;
+        align-items: center;
+        grid-template-columns: 40vw 60vw;
+        grid-template-rows: auto;
+        grid-template-areas: 
+            "header header"
+            "image trip"
+            "image buttons"
+            "image projections"
+            "footer footer";
+    }
+    img{
+        width: calc(40vw - 20px);
+        grid-area: image;
+        margin: 20px 10px 20px 10px;
+      }
 }
-
-.entry{
-    background: rgba(59, 74, 107, .4);
-}
-
-#entryHolder{
-
-}
-
-#date{
-
-}
-
-#temp{
-
-}
-
-#content{
-
-}
-
-.headline {
-
-}
-.title{
-
-}
-
-/*  Basic Styling To Override Default For Basic HTML Elements */
-label{
-    display:block;
-    font-size: 27px;
-}
-
-input{
-    display:block;
-    height: 60px;
-    width: 320px;
-    background:#22b2da;
-    color: #f0d43a;
-    font-size: 20px;
-    font-family: 'Oswald', sans-serif;
-    border: none;
-}
-
-button{
-    width: 400px;
-    height: 100px;
-    background: #3b4a6b;
-    color: #f0d43a;
-    font-size: 26px;
-    font-family: 'Oswald', sans-serif;
-    border: none;
-    box-shadow: 2px 4px 5px #444;
-}
-h1{
-    font-size: 36px;
-}
-
-textarea{
-    background:#22b2da;
-    color: #f0d43a;
-    font-size: 20px;
-    font-family: 'Oswald', sans-serif;
-}
-/* Reset style for HTML element on active to have no border*/
-input:focus,
-select:focus,
-textarea:focus,
-button:focus {
-    outline: none;
-}
-/* Style for Placeholder Text*/
-::placeholder { /* Firefox, Chrome, Opera */ 
-    color: #f0d43a; 
-    font-family: 'Oswald', sans-serif;
-
-} 
-  
-:-ms-input-placeholder { /* Internet Explorer 10-11 */ 
-    color: #f0d43a; 
-    font-family: 'Oswald', sans-serif;
-
-} 
-  
-::-ms-input-placeholder { /* Microsoft Edge */ 
-    color: #f0d43a; 
-    font-family: 'Oswald', sans-serif;
-
-} 
