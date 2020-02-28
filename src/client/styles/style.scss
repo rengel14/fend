@@ -26,6 +26,7 @@ header{
 }
 footer{
     padding-top: 10px;
+    padding-left: 10px;
     grid-area: footer;
     background-color: white;
 }
@@ -49,18 +50,24 @@ img{
     margin-left: 5vw;
     button{
         margin: 0px 10px 0px 0px;
+        border-style: outset;
+        background-color: $color;
     }
 }
 .projections{
     margin-left: 5vw;
     grid-area: "projections"
 }
+#loc, #date{
+  border: 0;
+  background-color: $color;
+}
 
 @media only screen and (min-width: 600px) {
     .container{
         display: grid;
         align-items: center;
-        grid-template-columns: 40vw 60vw;
+        grid-template-columns: 60vw 40vw;
         grid-template-rows: auto;
         grid-template-areas: 
             "header header"
@@ -70,8 +77,22 @@ img{
             "footer footer";
     }
     img{
-        width: calc(40vw - 20px);
+        width: calc(60vw - 20px);
         grid-area: image;
         margin: 20px 10px 20px 10px;
+      }
+      .tripFlex, button, .buttons, .projections{
+          justify-self: center;
+          font-size: 2vw;
+          margin: 0px;
+          margin-left: 0px;
+      }
+      #loc, #date{
+        font-size: 2vw;
+        border: 0;
+        background-color: $color;
+      }
+      #save{
+          margin: 0px 5vw 0px 0vw;
       }
 }
