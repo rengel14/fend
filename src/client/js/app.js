@@ -26,9 +26,8 @@ const RetrieveData = async (url='') =>{
         {
             const loc = data.loc
 
-            const time = Math.floor(Math.abs(data.time) / 86400)
             //Update output html fields
-            document.getElementById('locProj').innerText = loc + " is " + time + " days away."
+            document.getElementById('locProj').innerText = loc + " is " + data.time + " days away."
             document.getElementById('weatherProj').innerText = "Typical weather for then is:\nHigh - " + data.high + ", Low - " + data.low + "\n" + data.summary
             document.getElementById('loc').value = loc
             document.getElementById('locPic').src = data.pic

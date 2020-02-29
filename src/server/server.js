@@ -60,11 +60,11 @@ const GetCoords = async (addr) =>{
     }
 }
 
-const GetWeather = async (coords, date, loc) =>{ 
+const GetWeather = async (coords, date) =>{ 
     //base URL for the api
     const baseUrl = 'https://api.darksky.net/forecast/' + process.env.DarkSkyKey + '/'
     let url = baseUrl + coords.lat + ',' + coords.lon
-
+    
     //get time since epoch in seconds of midnight GMT of day entered
     const enteredDate = new Date(date).getTime() / 1000
     
@@ -89,11 +89,11 @@ const GetWeather = async (coords, date, loc) =>{
         // Transform into JSON
         const data = await response.json()
         const obj = {
-            loc: loc,
+            loc: "",
             high: data.daily.data[0].temperatureHigh,
             low: data.daily.data[0].temperatureLow,
             summary: data.daily.data[0].summary,
-            time: (enteredDate - today),
+            time: Math.floor(Math.abs(enteredDate - today) / 86400),
             pic: ""
         }
         return obj
@@ -105,24 +105,25 @@ const GetWeather = async (coords, date, loc) =>{
 }
 
 
-const GetPic = async (params, obj) =>{ 
+const GetPic = async (params) =>{ 
     //base URL for the api
     const baseUrl = 'https://pixabay.com/api/?key=' + process.env.PixabayKey + '&safesearch=true&image_type=photo&per_page=3&q='
     
     params = SpaceToPlus(params)
 
     let url = baseUrl + params
+
     const response = await fetch(url)
     try {
         // Transform into JSON
         const data = await response.json()
-        obj.pic = data.hits[0].webformatURL
-        console.log(data)
-        return obj
+        const pic = data.hits[0].webformatURL
+        return pic
     }
     catch(error) {
         // appropriately handle the error
         console.log("error", error)
+        return "/images/notFound.jpg"
     }
 }
 
@@ -135,6 +136,7 @@ app.get('/get', function (req, res) {
 app.post('/save', function (req, res) {
     //gets data and from client
     const data = req.body
+
     //if location string is blank, return a failure
     if(data.loc == "")
     {
@@ -142,25 +144,37 @@ app.post('/save', function (req, res) {
         return
     }
     
-    //Convert location string into latitude longitude pair
-    GetCoords(data.loc)
-    .then(function(coords) {
-        //get weather info for that location
-        GetWeather(coords, data.date, data.loc)
-        .then(function(obj) {
-            //add a picture url to obj returned from weather function
-            GetPic(data.loc, obj)
-            .then(function (obj) {
-                //store data object in global data variable
-                projectData = obj
-            })
-            .then(function (data) {
-                //sends a response back to the client side to show success
-                res.send({'status': 'success'})
-                console.log(projectData)
-            })
+    const coordPromise = GetCoords(data.loc)
+    const weatherPromise = coordPromise
+        .then((coords) => GetWeather(coords, data.date))
+
+    const picPromise = GetPic(data.loc)
+
+    Promise.all([weatherPromise, picPromise])
+        .then((values) => {
+            let obj = values[0]
+            const picUrl = values[1]
+            obj.loc = data.loc
+            obj.pic = picUrl
+            projectData = obj
+            res.send({'status': 'success'})
+            console.log(obj)
         })
-    })
+
+
+    //Convert location string into latitude longitude pair
+    // GetCoords(data.loc)
+    // //get weather info for that location
+    // .then((coords) => GetWeather(coords, data.date, data.loc))
+    // //add a picture url to obj returned from weather function
+    // .then((obj) => GetPic(data.loc, obj))
+    // //store data object in global data variable
+    // .then((obj) => projectData = obj)
+    // //sends a response back to the client side to show success
+    // .then((data) => {
+    //     res.send({'status': 'success'})
+    //     console.log(projectData)
+    // })
 })
 
 app.post('/remove', function (req, res) {
