@@ -5,8 +5,10 @@ import { RetrieveData } from './js/app'
 import './styles/style.scss'
 
 //binds the functions to go on click
-document.getElementById('save').addEventListener("click", SaveTrip)
-document.getElementById('remove').addEventListener("click", RemoveTrip)
+document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('save').addEventListener("click", SaveTrip)
+    document.getElementById('remove').addEventListener("click", RemoveTrip)
+})
 document.addEventListener('DOMContentLoaded', RetrieveData('http://localhost:3000/get'))
 
 //Calculate todays date to set minimum value for date field
