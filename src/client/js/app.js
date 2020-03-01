@@ -47,6 +47,7 @@ const SaveTrip = function() {
     .then(function(data) {
         RetrieveData('http://localhost:3000/get')
     })
+    console.log(document.getElementById('date').value)
 }
 
 const RemoveTrip = function() {
@@ -62,3 +63,9 @@ const RemoveTrip = function() {
 export { RetrieveData }
 export { RemoveTrip }
 export { SaveTrip }
+
+try{
+    module.exports = PostData
+}catch (error) {
+    console.log('Jest error');
+  }

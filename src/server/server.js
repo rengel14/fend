@@ -3,7 +3,7 @@ const dotenv = require('dotenv')
 dotenv.config()
 
 /* Empty JS object to act as endpoint for all routes */
-projectData = {}
+let projectData = {}
 
 /* Express to run server and routes */
 const express = require('express')
@@ -160,24 +160,15 @@ app.post('/save', function (req, res) {
             res.send({'status': 'success'})
             console.log(obj)
         })
-
-
-    //Convert location string into latitude longitude pair
-    // GetCoords(data.loc)
-    // //get weather info for that location
-    // .then((coords) => GetWeather(coords, data.date, data.loc))
-    // //add a picture url to obj returned from weather function
-    // .then((obj) => GetPic(data.loc, obj))
-    // //store data object in global data variable
-    // .then((obj) => projectData = obj)
-    // //sends a response back to the client side to show success
-    // .then((data) => {
-    //     res.send({'status': 'success'})
-    //     console.log(projectData)
-    // })
 })
 
 app.post('/remove', function (req, res) {
     projectData = {}
     res.send({'status': 'success'})
 })
+
+try{
+    module.exports = GetWeather
+}catch (error) {
+    console.log('Jest error');
+}
