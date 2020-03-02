@@ -15,6 +15,12 @@ const PostData = async ( url = '', data = {})=>{
     }
 }
 
+const SpaceToPlus = function(string) {
+    string = string.match(/(\w+)/g)
+    string = string.join('+')
+    return string
+}
+
 // Async GET
 const RetrieveData = async (url='') =>{ 
     const request = await fetch(url)
@@ -65,7 +71,7 @@ export { RemoveTrip }
 export { SaveTrip }
 
 try{
-    module.exports = PostData
+    module.exports = SpaceToPlus
 }catch (error) {
     console.log('Jest error');
   }
